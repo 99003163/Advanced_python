@@ -1,0 +1,81 @@
+class Contact_book:  # CONTACT BOOK
+    print("CONTACT BOOK")
+
+    def option_entry(self):  # Defines the options for phone book
+        option = int(input("""Which of the following operations would you like to perform\n
+        1. Display contacts\n
+        2. Add contact\n
+        3. Check contact\n
+        4. Delete contact\n
+        5. Exit\n"""))
+        return option  # Returns the entered option for further process
+
+
+class Validity:
+
+    def contact_no(self):  # Function to check validity of a number
+        fr1 = open("entry.txt", "r")
+        for each_line in fr1:
+            number = int(each_line[15:])
+            n = number
+            count = 0
+            while(n > 0):
+                count = count + 1
+                n = n//10
+            return count
+        fr1.close()
+
+
+class Phone_book(Contact_book, Validity):
+
+    def phone_book(self):  # Defines a Phone book
+        phonebook = {}  # Empty phone book to store values
+        while True:  # Initiating a loop to run the program
+            opt = pb.option_entry()
+            if opt == 1:  # Condition to display the contacts already present
+                if bool(phonebook) is True:
+                    for i, j in phonebook.items():
+                        print(i, '-->', j)
+                else:  # Condition to display if phone book is empty
+                    print("Phonebook is empty\n")
+            elif opt == 2:  # Condition to add a new contact
+                no_of_digits = pb.contact_no()  # call to check validity
+                print(no_of_digits)
+                if no_of_digits == 10:
+                    print("Number is Valid")
+                    fr1 = open("entry.txt", "r")
+                    for each_line in fr1:
+                        phone_no = each_line[15:]
+                        person_name = each_line[0:14]
+                        if person_name not in phonebook.keys():
+                            # Condition to update contact
+                            phonebook.update({person_name: phone_no})
+                            print("Contact has been successfully saved\n")
+                        elif person_name in phonebook.keys():
+                            print("Contact already exists\n")
+                    fr1.close()
+            elif opt == 3:  # Condition to check contacts
+                name = input("Enter the name whose contact you want to view\n")
+                if person_name in phonebook.keys():
+                    print("Contact already exists\n")
+                else:
+                    print ("Go to the option entry to add new contact\n")
+            elif opt == 4:  # Condition to Delete contacts
+                name = input("Enter the name whose contact you want to del\n")
+                if person_name in phonebook.keys():
+                    print('contact', person_name, ':', phonebook[person_name])
+                    confirmation = input("Are you sure you want to del? Y/N\n")
+                    if confirmation.capitalize == "Y":  # Initiate a decision
+                        phonebook.pop(name, None)  # If yes then remove contact
+                        # To print the rest of contacts in the phone book
+                        for i, j in phonebook.items():
+                            print(i, '-->', j)
+                    else:
+                        print("Return to option_entry\n")
+                else:
+                    print("Contact doesn't exist\n")
+            elif opt == 5:  # condition to exit
+                print("THANK YOU\n")
+                break  # Ends program
+pb = Phone_book()
+pb.phone_book()
