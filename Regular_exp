@@ -1,0 +1,9 @@
+import re
+ids = 'shrey98@google.com, kori@hotmail.com, shreyakori@yahoocom'
+email = re.findall(r'[\w\.-]+@[\w\.-]+\.[a-z]{3}',ids)
+for mail in email:
+    print(mail)
+spl=re.split(r'\s',ids)
+print(spl)
+for id1 in spl:
+    print(re.match("[a-z 0-9]+@[a-z]+\.[a-z]{3}",id1))
